@@ -4,6 +4,7 @@ Layout created with Ant Design and Styled Component.
 JWT user authentication.
 
 ## Features:
+- Register
 - Login
 - Reset Password
 - Logout
