@@ -1,6 +1,6 @@
 # Simple SPA with React + NextJs front-end and Laravel 8 backend
 
-Layout created with Ant Design and Styled Component. 
+Layout created with Ant Design and Styled Component.  
 JWT user authentication.
 
 ## Features:
