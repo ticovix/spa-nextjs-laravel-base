@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+
+SCRIPTPATH=$(dirname "$BASH_SOURCE")/../
+
+if [[ "$OSTYPE" == darwin* ]]; then
+    docker-compose -f $SCRIPTPATH/docker-compose.yml $*
+else
+    docker-compose -f $SCRIPTPATH/docker-compose.other.yml $*
+fi

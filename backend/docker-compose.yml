@@ -1,0 +1,60 @@
+version: "3"
+
+services:
+  php:
+    build:
+      context: .
+      dockerfile: opt/docker/php-fpm/Dockerfile
+    working_dir: /var/www
+    volumes:
+      - nfsmount:/var/www
+      - ./opt/docker/php-fpm/php.ini:/etc/php/7.3/fpm/conf.d/custom.ini
+    links:
+      - database
+    networks:
+      - default
+
+  node:
+    image: digitallyseamless/nodejs-bower-grunt
+    working_dir: /var/www
+    volumes:
+      - nfsmount:/var/www
+
+  composer:
+    image: composer:latest
+    working_dir: /var/www
+    volumes:
+      - nfsmount:/var/www
+    links:
+      - php
+
+  database:
+    image: mysql:5.7
+    volumes:
+        - ./opt/docker/mysql/my.cnf:/etc/mysql/conf.d/docker.cnf
+    environment:
+        MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+        MYSQL_DATABASE: ${DB_DATABASE}
+        MYSQL_USER: ${DB_USERNAME}
+        MYSQL_PASSWORD: ${DB_PASSWORD}
+    ports:
+        - 3306:3306
+
+  webserver:
+    image: nginx:alpine
+    working_dir: /var/www
+    volumes:
+        - nfsmount:/var/www
+        - ./opt/docker/nginx/sites-available/:/etc/nginx/conf.d/
+    ports:
+     - "80:80"
+    links:
+     - php
+
+volumes:
+  nfsmount:
+    driver: local
+    driver_opts:
+      type: nfs
+      o: addr=host.docker.internal,rw,nolock,hard,nointr,nfsvers=3
+      device: ":${PWD}"
