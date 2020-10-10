@@ -15,11 +15,11 @@ return [
     |
     */
 
-    'paths' => ['/*'],
+    'paths' => ['api/*'],
 
     'allowed_methods' => ['*'],
 
-    'allowed_origins' => ['http://localhost:3000', 'http://f1reboque.local', 'https://f1reboque.com'],
+    'allowed_origins' => ['http://localhost:3000', 'http://project.local'],
 
     'allowed_origins_patterns' => [],
 

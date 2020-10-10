@@ -14,7 +14,7 @@ return [
     */
 
     'defaults' => [
-        'guard' => 'company_user',
+        'guard' => 'api',
         'passwords' => 'users',
     ],
 
@@ -41,9 +41,9 @@ return [
             'provider' => 'users',
         ],
 
-        'company_user' => [
+        'api' => [
             'driver' => 'jwt',
-            'provider' => 'company_users'
+            'provider' => 'users'
         ],
     ],
 
@@ -70,11 +70,6 @@ return [
             'model' => App\Models\User::class,
         ],
 
-        'company_users' => [
-            'driver' => 'eloquent',
-            'model' => App\Models\CompanyUser::class,
-        ],
-
         // 'users' => [
         //     'driver' => 'database',
         //     'table' => 'users',
@@ -99,13 +94,6 @@ return [
     'passwords' => [
         'users' => [
             'provider' => 'users',
-            'table' => 'password_resets',
-            'expire' => 60,
-            'throttle' => 60,
-        ],
-
-        'company_users' => [
-            'provider' => 'company_users',
             'table' => 'password_resets',
             'expire' => 60,
             'throttle' => 60,
