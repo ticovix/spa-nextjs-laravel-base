@@ -6,7 +6,8 @@ import { PersistGate } from 'redux-persist/integration/react';
 import { AuthProvider } from 'contexts/auth';
 import { SWRConfig } from 'swr';
 import { ConfigProvider } from 'antd';
-import ptBR from 'antd/lib/locale/pt_BR';
+//import ptBR from 'antd/lib/locale/pt_BR';
+import enUS from 'antd/lib/locale/en_US';
 import NProgress from 'nprogress';
 import 'nprogress/nprogress.css';
 
@@ -24,7 +25,7 @@ export default function App({ Component, pageProps }) {
       <PersistGate loading={null} persistor={persistor}>
         <SWRConfig value={swrConfig}>
           <AuthProvider>
-            <ConfigProvider locale={ptBR}>
+            <ConfigProvider locale={enUS}>
               <Component {...pageProps} />
             </ConfigProvider>
           </AuthProvider>

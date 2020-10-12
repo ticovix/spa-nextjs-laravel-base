@@ -84,7 +84,7 @@ class User extends Authenticatable implements JWTSubject, CanResetPassword
 
     public function updatePassword($oldPassword, $newPassword)
     {
-        if (!Hash::check($oldPassword, $this->password)) {
+        if (! Hash::check($oldPassword, $this->password)) {
             throw new \Exception('Senha antiga incorreta.');
         }
 
@@ -95,6 +95,10 @@ class User extends Authenticatable implements JWTSubject, CanResetPassword
     public function handleUpload($photo)
     {
         $upload = new Upload($photo);
+        $upload->image_resize = true;
+        $upload->image_x = 400;
+        $upload->image_y = 400;
+        $upload->image_ratio_crop = true;
         $this->photo = $upload->save(UploadPath::USER_IMAGES);
         $this->update();
     }

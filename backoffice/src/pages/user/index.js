@@ -3,7 +3,6 @@ import { Layout, Container } from 'components/Layout';
 import PageHeader from 'components/PageHeader';
 import { Form, Button, Input, Upload, Avatar, Popconfirm } from 'antd';
 import useAuth from 'contexts/auth';
-import InputMask from 'react-input-mask';
 import { changeProfile, uploadAvatar, deleteAvatar } from 'services/account';
 import { handleErrors, successMessage, getBase64 } from 'utils';
 import { UserOutlined, DeleteOutlined } from '@ant-design/icons';
@@ -17,7 +16,7 @@ const User = () => {
   const [loading, setLoading] = useState(false);
   const routes = [
     {
-      breadcrumbName: 'Minha Conta',
+      breadcrumbName: 'My Account',
       path: '/user',
     },
   ];
@@ -28,7 +27,7 @@ const User = () => {
       .then((response) => {
         uploadPhoto();
         updateUser({ ...user, ...values });
-        successMessage('Perfil alterado com sucesso!');
+        successMessage('Updated profile successful!');
       })
       .catch((e) => {
         handleErrors(e.response.data);
@@ -85,7 +84,7 @@ const User = () => {
 
   return (
     <Layout>
-      <PageHeader title="Minha Conta" breadcrumb={{ routes }} />
+      <PageHeader title="My Account" breadcrumb={{ routes }} />
       <Container>
         <Form
           initialValues={user}
@@ -109,7 +108,7 @@ const User = () => {
                 size="small"
                 loading={imageLoading || loading}
               >
-                {loading ? 'Enviando..' : 'Selecionar Foto'}
+                {loading ? 'Sending..' : 'Select a photo'}
               </Button>
             </Upload>
             {(image || selectedFile) && (
@@ -117,12 +116,12 @@ const User = () => {
                 placement="bottom"
                 title={
                   selectedFile
-                    ? 'Deseja realmente cancelar a foto?'
-                    : 'Deseja realmente remover?'
+                    ? 'Do you really want to cancel the photo?'
+                    : 'Do you really want to remove it?'
                 }
                 onConfirm={() => handleDeleteImage()}
-                okText="Sim"
-                cancelText="Não"
+                okText="Yes"
+                cancelText="No"
                 key={1}
               >
                 <Button
@@ -137,32 +136,15 @@ const User = () => {
             )}
           </AvatarBase>
 
-          <Form.Item
-            name="name"
-            label="Nome"
-            rules={[{ required: true, message: 'Digite o nome' }]}
-          >
+          <Form.Item name="name" label="Name" rules={[{ required: true }]}>
             <Input />
           </Form.Item>
           <Form.Item
             name="email"
-            label="E-mail"
-            rules={[
-              { required: true, message: 'Digite o e-mail' },
-              {
-                type: 'email',
-                message: 'E-mail inválido',
-              },
-            ]}
+            label="Email"
+            rules={[{ required: true }, { type: 'email' }]}
           >
             <Input type="email" />
-          </Form.Item>
-          <Form.Item name="phone" label="Telefone">
-            <InputMask
-              mask="(99) 9999-99999"
-              maskChar={null}
-              className="ant-input"
-            />
           </Form.Item>
           <Form.Item
             wrapperCol={{
@@ -176,7 +158,7 @@ const User = () => {
               disabled={loading}
               loading={loading}
             >
-              Salvar
+              Save
             </Button>
           </Form.Item>
         </Form>

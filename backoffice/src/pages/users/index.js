@@ -20,7 +20,7 @@ const Users = () => {
   const routes = [
     {
       path: 'users',
-      breadcrumbName: 'Usuários',
+      breadcrumbName: 'Users',
     },
   ];
 
@@ -38,7 +38,7 @@ const Users = () => {
 
       remove(user.id).catch((e) => {
         mutate(users);
-        handleErrors(e.response.data);
+        handleErrors(e);
       });
     },
     [users, mutate]
@@ -47,11 +47,11 @@ const Users = () => {
   return (
     <Layout>
       <PageHeader
-        title="Usuários"
+        title="Users"
         breadcrumb={{ routes }}
         extra={[
           <Button key="0" onClick={() => setUser({})} type="primary">
-            <PlusOutlined /> Usuário
+            <PlusOutlined /> User
           </Button>,
         ]}
       />
@@ -63,7 +63,7 @@ const Users = () => {
           renderItem={(user) => (
             <List.Item
               actions={[
-                <Tooltip title="Editar" key={0}>
+                <Tooltip title="Edit" key={0}>
                   <Button
                     type="primary"
                     icon={<EditOutlined />}
@@ -72,13 +72,13 @@ const Users = () => {
                 </Tooltip>,
                 <Popconfirm
                   placement="leftTop"
-                  title="Deseja realmente remover?"
+                  title="Do you really want to remove it?"
                   onConfirm={() => removeUser(user)}
-                  okText="Sim"
-                  cancelText="Não"
+                  okText="Yes"
+                  cancelText="No"
                   key={1}
                 >
-                  <Tooltip title="Remover">
+                  <Tooltip title="Remove">
                     <Button type="danger" icon={<DeleteOutlined />} />
                   </Tooltip>
                 </Popconfirm>,

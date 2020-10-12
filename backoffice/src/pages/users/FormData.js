@@ -26,7 +26,7 @@ const FormData = ({ data, setData, users, mutate, visible, setVisible }) => {
   const [imageLoading, setImageLoading] = useState(false);
   const [form] = Form.useForm();
   const isEdit = data.id;
-  const title = isEdit ? 'Editar' : 'Adicionar';
+  const title = isEdit ? 'Edit' : 'Create';
   const { user: authUser, updateUser: updateAuthUser } = useAuth();
 
   const closeDrower = () => {
@@ -109,7 +109,7 @@ const FormData = ({ data, setData, users, mutate, visible, setVisible }) => {
           false
         );
 
-        successMessage('Usuário editado com sucesso!');
+        successMessage('Updated user successful!');
         closeDrower();
       })
       .catch(function (e) {
@@ -128,7 +128,7 @@ const FormData = ({ data, setData, users, mutate, visible, setVisible }) => {
         mutate(users.concat(userData), false);
         uploadPhoto(userId);
 
-        successMessage('Usuário cadastrado com sucesso!');
+        successMessage('Registered user successful!');
         closeDrower();
       })
       .catch(function (e) {
@@ -197,10 +197,10 @@ const FormData = ({ data, setData, users, mutate, visible, setVisible }) => {
           }}
         >
           <Button onClick={closeDrower} style={{ marginRight: 8 }}>
-            Cancelar
+            Cancel
           </Button>
           <Button onClick={handleReset} style={{ marginRight: 8 }}>
-            Resetar
+            Reset
           </Button>
           <Button
             htmlType="submit"
@@ -209,7 +209,7 @@ const FormData = ({ data, setData, users, mutate, visible, setVisible }) => {
             loading={loading}
             disabled={loading}
           >
-            Salvar
+            Save
           </Button>
         </div>
       }
@@ -238,7 +238,7 @@ const FormData = ({ data, setData, users, mutate, visible, setVisible }) => {
                   size="small"
                   loading={imageLoading || loading}
                 >
-                  {loading ? 'Enviando..' : 'Selecionar Foto'}
+                  {loading ? 'Sending..' : 'Select Photo'}
                 </Button>
               </Upload>
               {(image || selectedFile) && (
@@ -246,12 +246,12 @@ const FormData = ({ data, setData, users, mutate, visible, setVisible }) => {
                   placement="bottom"
                   title={
                     selectedFile
-                      ? 'Deseja realmente cancelar a foto?'
-                      : 'Deseja realmente remover?'
+                      ? 'Do you really want to cancel the photo?'
+                      : 'Do you really want to remove it?'
                   }
                   onConfirm={() => handleDeleteImage()}
-                  okText="Sim"
-                  cancelText="Não"
+                  okText="Yes"
+                  cancelText="No"
                   key={1}
                 >
                   <Button
@@ -268,45 +268,30 @@ const FormData = ({ data, setData, users, mutate, visible, setVisible }) => {
           </Col>
           <Col sm={24} md={19}>
             <Row gutter={16}>
-              <Col xs={24} sm={8}>
+              <Col xs={24} sm={12}>
                 <Form.Item
                   name="name"
-                  label="Nome"
-                  rules={[{ required: true, message: 'Digite o nome' }]}
+                  label="Name"
+                  rules={[{ required: true }]}
                 >
                   <Input />
                 </Form.Item>
               </Col>
-              <Col xs={24} sm={8}>
+              <Col xs={24} sm={12}>
                 <Form.Item
                   name="email"
-                  label="E-mail"
-                  rules={[
-                    { required: true, message: 'Digite o e-mail' },
-                    {
-                      type: 'email',
-                      message: 'E-mail inválido',
-                    },
-                  ]}
+                  label="Email"
+                  rules={[{ required: true }, { type: 'email' }]}
                 >
                   <Input type="email" />
-                </Form.Item>
-              </Col>
-              <Col xs={24} sm={8}>
-                <Form.Item name="phone" label="Telefone">
-                  <InputMask
-                    mask="(99) 9999-99999"
-                    maskChar={null}
-                    className="ant-input"
-                  />
                 </Form.Item>
               </Col>
             </Row>
             {isEdit && (
               <>
-                <Divider className="mb-0">Alterar Senha</Divider>
+                <Divider className="mb-0">Change Password</Divider>
                 <p className="text-center">
-                  Preencha abaixo somente se desejar alterar a senha
+                  Fill in below only if you want to change the password
                 </p>
               </>
             )}
@@ -314,18 +299,8 @@ const FormData = ({ data, setData, users, mutate, visible, setVisible }) => {
               <Col span={12}>
                 <Form.Item
                   name="password"
-                  label="Senha"
-                  rules={
-                    !isEdit && [
-                      {
-                        min: 6,
-                      },
-                      {
-                        required: true,
-                        message: 'Digite a senha',
-                      },
-                    ]
-                  }
+                  label="Password"
+                  rules={!isEdit && [{ min: 6 }, { required: true }]}
                 >
                   <Input type="password" />
                 </Form.Item>
@@ -333,13 +308,10 @@ const FormData = ({ data, setData, users, mutate, visible, setVisible }) => {
               <Col span={12}>
                 <Form.Item
                   name="password_confirmation"
-                  label="Repita a Senha"
+                  label="Repeat password"
                   rules={
                     !isEdit && [
-                      {
-                        required: true,
-                        message: 'Repita a senha',
-                      },
+                      { required: true },
                       ({ getFieldValue }) => ({
                         validator(rule, value) {
                           if (!value || getFieldValue('password') === value) {
@@ -347,7 +319,7 @@ const FormData = ({ data, setData, users, mutate, visible, setVisible }) => {
                           }
 
                           return Promise.reject(
-                            'A senha repetida está diferente'
+                            'The repeated password is different'
                           );
                         },
                       }),

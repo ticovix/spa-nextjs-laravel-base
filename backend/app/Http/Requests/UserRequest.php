@@ -27,7 +27,6 @@ class UserRequest extends FormRequest
         $user = request()->route()->parameter('user');
         $rules = [
             'name' => 'required',
-            'phone' => 'present',
             'email' => [
                 'required',
                 Rule::unique('users')

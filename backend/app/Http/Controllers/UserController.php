@@ -1,8 +1,7 @@
 <?php
 
-namespace App\Http\Controllers\BoApi;
+namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
 use App\Http\Requests\UserRequest;
 use App\Models\User;
 use Illuminate\Http\Request;

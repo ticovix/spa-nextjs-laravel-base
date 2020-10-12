@@ -1,8 +1,8 @@
 import React, { useState, useRef, useLayoutEffect } from 'react';
 import Navigation from './Navigation';
 import 'assets/styles/theme.less';
-import logoLg from 'assets/images/logo.svg';
-import logoSm from 'assets/images/logo-sm.svg';
+import logoLg from 'assets/images/logo.png';
+import logoSm from 'assets/images/logo-sm.png';
 import useAuth from 'contexts/auth';
 import Link from 'next/link';
 import { Layout as AntdLayout, Avatar, Dropdown, Menu } from 'antd';
@@ -45,17 +45,17 @@ const Layout = ({ children }) => {
   const userMenu = (
     <Menu id="nav-user">
       <Menu.Item key={uuid()} icon={<UserOutlined />}>
-        <Link href="/user">Minha Conta</Link>
+        <Link href="/user">My Account</Link>
       </Menu.Item>
       <Menu.Item key={uuid()} icon={<KeyOutlined />}>
-        <Link href="/user/change-password">Alterar Senha</Link>
+        <Link href="/user/change-password">Change Password</Link>
       </Menu.Item>
       <Menu.Item
         key={uuid()}
         icon={<LogoutOutlined />}
         onClick={() => logout()}
       >
-        Sair
+        Logout
       </Menu.Item>
     </Menu>
   );
@@ -101,7 +101,7 @@ const Layout = ({ children }) => {
           </div>
         </Header>
         <Content>{children}</Content>
-        <Footer style={{ textAlign: 'center' }}>F1 Reboque ©2020</Footer>
+        <Footer style={{ textAlign: 'center' }}>Project ©2020</Footer>
       </AntdLayout>
     </div>
   );

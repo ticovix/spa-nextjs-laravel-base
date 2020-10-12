@@ -24,15 +24,14 @@ class AccountRequest extends FormRequest
      */
     public function rules()
     {
-        $companyUser = auth()->user();
+        $user = auth()->user();
 
         return [
             'name' => 'required',
-            'phone' => 'present',
             'email' => [
                 'required',
-                Rule::unique('company_users')
-                    ->ignore($companyUser->id)
+                Rule::unique('users')
+                    ->ignore($user->id)
                     ->whereNull('deleted_at')
             ],
         ];

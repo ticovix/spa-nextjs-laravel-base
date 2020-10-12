@@ -22,7 +22,7 @@ function* watchSignIn(payload) {
 
     yield Router.push('/');
   } catch (e) {
-    yield call(handleErrors, e.response.data);
+    yield call(handleErrors, e);
   }
 
   yield put(setLoading(false));

@@ -2,8 +2,6 @@ import React, { useState } from 'react';
 import { Layout, Container } from 'components/Layout';
 import PageHeader from 'components/PageHeader';
 import { Form, Button, Input } from 'antd';
-import useAuth from 'contexts/auth';
-import InputMask from 'react-input-mask';
 import { changePassword } from 'services/account';
 import { successMessage, handleErrors } from 'utils';
 
@@ -12,7 +10,7 @@ const changePasswod = () => {
   const [loading, setLoading] = useState(false);
   const routes = [
     {
-      breadcrumbName: 'Alterar Senha',
+      breadcrumbName: 'Change Password',
       path: '/user/change-password',
     },
   ];
@@ -22,7 +20,7 @@ const changePasswod = () => {
     changePassword(values)
       .then(() => {
         form.resetFields();
-        successMessage('Senha alterada com sucesso!');
+        successMessage('Updated password sucessful!');
       })
       .catch((e) => {
         handleErrors(e);
@@ -32,7 +30,7 @@ const changePasswod = () => {
 
   return (
     <Layout>
-      <PageHeader title="Alterar Senha" breadcrumb={{ routes }} />
+      <PageHeader title="Change Password" breadcrumb={{ routes }} />
       <Container>
         <Form
           form={form}
@@ -43,28 +41,24 @@ const changePasswod = () => {
         >
           <Form.Item
             name="old_password"
-            label="Senha Atual"
-            rules={[{ required: true, message: 'Digite a senha atual' }]}
+            label="Current Password"
+            rules={[{ required: true }]}
           >
             <Input type="password" />
           </Form.Item>
           <Form.Item
             name="password"
-            label="Senha"
-            rules={[
-              { min: 6 },
-              { required: true, message: 'Digite a nova senha' },
-            ]}
+            label="Password"
+            rules={[{ min: 6 }, { required: true }]}
           >
             <Input type="password" />
           </Form.Item>
           <Form.Item
             name="password_confirmation"
-            label="Repita a Senha"
+            label="Repeat Password"
             rules={[
               {
                 required: true,
-                message: 'Repita a nova senha',
               },
               ({ getFieldValue }) => ({
                 validator(rule, value) {
@@ -72,7 +66,7 @@ const changePasswod = () => {
                     return Promise.resolve();
                   }
 
-                  return Promise.reject('A senha repetida está diferente');
+                  return Promise.reject('The repeated password is different');
                 },
               }),
             ]}
@@ -91,7 +85,7 @@ const changePasswod = () => {
               loading={loading}
               disabled={loading}
             >
-              Salvar
+              Save
             </Button>
           </Form.Item>
         </Form>

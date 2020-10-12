@@ -15,17 +15,17 @@ class AccountController extends Controller
 
     public function update(AccountRequest $request)
     {
-        $companyUser = auth()->user();
-        $companyUser->updateUser($request->validated());
+        $user = auth()->user();
+        $user->updateUser($request->validated());
 
-        return response()->json($companyUser);
+        return response()->json($user);
     }
 
     public function changePassword(ChangePasswordRequest $request)
     {
         try {
-            $companyUser = auth()->user();
-            $companyUser->updatePassword($request->old_password, $request->password);
+            $user = auth()->user();
+            $user->updatePassword($request->old_password, $request->password);
         } catch (\Exception $e) {
             return basicResponse($e->getMessage(), 422);
         }
@@ -37,17 +37,17 @@ class AccountController extends Controller
             'photo' => 'required'
         ]);
 
-        $companyUser = auth()->user();
-        $companyUser->handleUpload($request->file('photo'));
+        $user = auth()->user();
+        $user->handleUpload($request->file('photo'));
 
         return response()->json([
-            'photo' => $companyUser->photo
+            'photo' => $user->photo
         ]);
     }
 
     public function deleteAvatar()
     {
-        $companyUser = auth()->user();
-        $companyUser->deleteAvatar();
+        $user = auth()->user();
+        $user->deleteAvatar();
     }
 }

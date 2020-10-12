@@ -10,7 +10,7 @@ import {
 import { Form, Input, Button, Image } from 'antd';
 import 'assets/styles/theme.less';
 import { LockOutlined } from '@ant-design/icons';
-import logo from 'assets/images/logo.svg';
+import logo from 'assets/images/logo.png';
 import { resetPassword } from 'services/forgotPassword';
 import { successMessage, handleErrors } from 'utils';
 
@@ -24,7 +24,7 @@ const resetUserPassword = () => {
     resetPassword({ ...values, email, token })
       .then((response) => {
         form.resetFields();
-        successMessage('Senha alterada com sucesso!');
+        successMessage('Updated password successful!');
         router.push('/login');
       })
       .catch((e) => handleErrors(e))
@@ -38,7 +38,7 @@ const resetUserPassword = () => {
       <Image src={logo} className="logo" />
       <Box>
         <BoxHeader>
-          <BoxTitle>Redefinir Senha</BoxTitle>
+          <BoxTitle>Reset Password</BoxTitle>
         </BoxHeader>
         <BoxBody>
           <Form
@@ -48,7 +48,7 @@ const resetUserPassword = () => {
             hideRequiredMark
           >
             <Form.Item
-              label="Senha"
+              label="Password"
               className="label"
               name="password"
               rules={[
@@ -57,7 +57,6 @@ const resetUserPassword = () => {
                 },
                 {
                   required: true,
-                  message: 'Digite a nova senha',
                 },
               ]}
             >
@@ -69,13 +68,12 @@ const resetUserPassword = () => {
               />
             </Form.Item>
             <Form.Item
-              label="Repetir Senha"
+              label="Repeat Password"
               className="label"
               name="password_confirmation"
               rules={[
                 {
                   required: true,
-                  message: 'Repita a nova senha',
                 },
                 ({ getFieldValue }) => ({
                   validator(rule, value) {
@@ -83,7 +81,7 @@ const resetUserPassword = () => {
                       return Promise.resolve();
                     }
 
-                    return Promise.reject('A senha repetida está diferente');
+                    return Promise.reject('The repeated password is different');
                   },
                 }),
               ]}
@@ -102,10 +100,10 @@ const resetUserPassword = () => {
               loading={loading}
               block
             >
-              Salvar
+              Reset
             </Button>
             <Button onClick={() => router.push('/login')} type="text">
-              Voltar
+              Back
             </Button>
           </Form>
         </BoxBody>

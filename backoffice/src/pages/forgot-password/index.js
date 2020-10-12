@@ -9,7 +9,7 @@ import {
 import { Form, Input, Button, Image } from 'antd';
 import 'assets/styles/theme.less';
 import { UserOutlined } from '@ant-design/icons';
-import logo from 'assets/images/logo.svg';
+import logo from 'assets/images/logo.png';
 import { useRouter } from 'next/router';
 import { sendEmail } from 'services/forgotPassword';
 import { successMessage, handleErrors } from 'utils';
@@ -23,7 +23,9 @@ const ForgotPassword = () => {
     sendEmail(values.email)
       .then((response) => {
         form.resetFields();
-        successMessage('E-mail enviado com sucesso!');
+        successMessage(
+          'Sent email successful! In a moment you will receive an email to reset your password.'
+        );
       })
       .catch((e) => handleErrors(e))
       .finally(() => {
@@ -36,7 +38,7 @@ const ForgotPassword = () => {
       <Image src={logo} className="logo" />
       <Box>
         <BoxHeader>
-          <BoxTitle>Redefinir Senha</BoxTitle>
+          <BoxTitle>Reset Password</BoxTitle>
         </BoxHeader>
         <BoxBody>
           <Form
@@ -46,24 +48,22 @@ const ForgotPassword = () => {
             hideRequiredMark
           >
             <Form.Item
-              label="E-mail"
+              label="Email"
               className="label"
               name="email"
               rules={[
                 {
                   required: true,
-                  message: 'Digite seu e-mail',
                 },
                 {
                   type: 'email',
-                  message: 'E-mail inválido',
                 },
               ]}
             >
               <Input
                 type="email"
                 prefix={<UserOutlined className="site-form-item-icon" />}
-                placeholder="exemplo@empresa.com"
+                placeholder="example@company.com"
                 size="large"
               />
             </Form.Item>
@@ -74,10 +74,10 @@ const ForgotPassword = () => {
               loading={loading}
               block
             >
-              Enviar
+              Send
             </Button>
             <Button onClick={() => router.back()} type="text">
-              Voltar
+              Back
             </Button>
           </Form>
         </BoxBody>

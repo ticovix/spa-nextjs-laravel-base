@@ -22,7 +22,7 @@ trait AuthTrait
 
         $token = $auth->attempt($credentials);
         if (! $token) {
-            return basicResponse('E-mail ou senha inválidos.', 400);
+            return basicResponse(__('auth.failed'), 400);
         }
 
         return response()->json([

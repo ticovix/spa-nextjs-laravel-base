@@ -3,7 +3,7 @@ import { Container, Box, BoxFooter, BoxBody } from 'assets/styles/styled';
 import { Checkbox, Form, Input, Button, Divider, Image } from 'antd';
 import 'assets/styles/theme.less';
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
-import logo from 'assets/images/logo.svg';
+import logo from 'assets/images/logo.png';
 import useAuth from 'contexts/auth';
 import Link from 'next/link';
 
@@ -18,50 +18,47 @@ const Login = () => {
         <BoxBody>
           <Form layout="vertical" onFinish={handleSubmit} hideRequiredMark>
             <Form.Item
-              label="E-mail"
+              label="Email"
               className="label"
               name="email"
               rules={[
                 {
                   required: true,
-                  message: 'Digite seu e-mail',
                 },
                 {
                   type: 'email',
-                  message: 'E-mail inválido',
                 },
               ]}
             >
               <Input
                 type="email"
                 prefix={<UserOutlined className="site-form-item-icon" />}
-                placeholder="exemplo@empresa.com"
+                placeholder="example@company.com"
                 size="large"
               />
             </Form.Item>
             <Form.Item
-              label="Senha"
+              label="Password"
               className="label"
               name="password"
               rules={[
                 {
                   required: true,
-                  message: 'Digite sua senha',
                 },
               ]}
             >
               <Input
                 type="password"
                 prefix={<LockOutlined className="site-form-item-icon" />}
-                placeholder="Sua senha"
+                placeholder="Your Password"
                 size="large"
               />
             </Form.Item>
             <Form.Item className="login-form-forgot">
               <Form.Item name="remember" valuePropName="checked" noStyle>
-                <Checkbox>Lembrar senha</Checkbox>
+                <Checkbox>Remember me</Checkbox>
               </Form.Item>
-              <Link href="/forgot-password">Esqueci minha senha</Link>
+              <Link href="/forgot-password">Forgot password?</Link>
             </Form.Item>
             <Button
               type="primary"
@@ -71,14 +68,14 @@ const Login = () => {
               loading={isLoading}
               block
             >
-              Acessar
+              Login
             </Button>
           </Form>
         </BoxBody>
         <BoxFooter>
-          <Divider className="no-margin">OU</Divider>
+          <Divider className="no-margin">OR</Divider>
           <p>
-            Não é cadastrado? <a href="">Crie uma conta!</a>
+            Need an account? <a href="">Sign up now!</a>
           </p>
         </BoxFooter>
       </Box>
