@@ -13,7 +13,9 @@ export const Container = styled.div`
   .ant-image.logo {
     display: block;
     margin-bottom: 50px;
+
     img {
+      width: auto;
       height: 25px;
     }
   }

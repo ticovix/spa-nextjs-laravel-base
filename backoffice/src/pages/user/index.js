@@ -30,7 +30,7 @@ const User = () => {
         successMessage('Updated profile successful!');
       })
       .catch((e) => {
-        handleErrors(e.response.data);
+        handleErrors(e);
       })
       .finally(() => {
         setLoading(false);
@@ -45,7 +45,7 @@ const User = () => {
           updateUser({ photo });
         })
         .catch((e) => {
-          handleErrors(e.response.data);
+          handleErrors(e);
         });
     }
   };
@@ -106,9 +106,10 @@ const User = () => {
                 type="primary"
                 className="mt-2"
                 size="small"
+                disabled={selectedFile && loading}
                 loading={imageLoading || loading}
               >
-                {loading ? 'Sending..' : 'Select a photo'}
+                {selectedFile && loading ? 'Sending..' : 'Select Photo'}
               </Button>
             </Upload>
             {(image || selectedFile) && (

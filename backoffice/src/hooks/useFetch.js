@@ -2,7 +2,7 @@ import api from 'services/api';
 import useSWR from 'swr';
 
 const useFetch = (uri, initialData, { ...options }) => {
-  const { data, error, mutate } = useSWR(
+  const { data, error, mutate, isValidating } = useSWR(
     uri,
     async (uri) => {
       const response = await api().get(uri);
@@ -15,7 +15,7 @@ const useFetch = (uri, initialData, { ...options }) => {
     }
   );
 
-  return { data, error, mutate };
+  return { data, error, mutate, isValidating };
 };
 
 export default useFetch;

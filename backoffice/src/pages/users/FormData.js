@@ -17,7 +17,6 @@ import { getBase64, successMessage, handleErrors } from 'utils';
 import { UserOutlined, DeleteOutlined } from '@ant-design/icons';
 import { update, create, uploadAvatar, deleteAvatar } from 'services/user';
 import useAuth from 'contexts/auth';
-import InputMask from 'react-input-mask';
 
 const FormData = ({ data, setData, users, mutate, visible, setVisible }) => {
   const [loading, setLoading] = useState(false);
@@ -60,23 +59,15 @@ const FormData = ({ data, setData, users, mutate, visible, setVisible }) => {
   };
 
   const uploadPhoto = (userId) => {
+    let photo = null;
+
     if (!selectedFile) {
-      return false;
+      return photo;
     }
 
     uploadAvatar(userId, selectedFile)
       .then(function (response) {
-        const photo = response.data.photo;
-        mutate(
-          users.map((item) => {
-            if (item.id === userId) {
-              return { ...item, photo };
-            }
-
-            return item;
-          }),
-          false
-        );
+        photo = response.data.photo;
 
         if (userId === authUser.id) {
           updateAuthUser({ photo });
@@ -85,15 +76,15 @@ const FormData = ({ data, setData, users, mutate, visible, setVisible }) => {
       .catch(function (e) {
         handleErrors(e);
       });
+
+    return photo;
   };
 
   const updateUser = (user) => {
     update(user)
       .then(function (response) {
         let userData = response.data;
-
-        uploadPhoto(userData.id);
-
+        userData.photo = uploadPhoto(userData.id);
         if (userData.id === authUser.id) {
           updateAuthUser(user);
         }
@@ -120,19 +111,20 @@ const FormData = ({ data, setData, users, mutate, visible, setVisible }) => {
       });
   };
 
-  const createUser = async (user) => {
+  const createUser = (user) => {
     create(user)
       .then(function (response) {
         let userData = response.data;
-        let userId = userData.id;
+        userData.photo = uploadPhoto(userData.id);
+
         mutate(users.concat(userData), false);
-        uploadPhoto(userId);
+        console.log(users, userData);
 
         successMessage('Registered user successful!');
         closeDrower();
       })
       .catch(function (e) {
-        handleErrors(response.data);
+        handleErrors(e);
       })
       .finally(function () {
         setLoading(false);
@@ -236,9 +228,10 @@ const FormData = ({ data, setData, users, mutate, visible, setVisible }) => {
                   type="primary"
                   className="mt-2"
                   size="small"
+                  disabled={selectedFile && loading}
                   loading={imageLoading || loading}
                 >
-                  {loading ? 'Sending..' : 'Select Photo'}
+                  {selectedFile && loading ? 'Sending..' : 'Select Photo'}
                 </Button>
               </Upload>
               {(image || selectedFile) && (
