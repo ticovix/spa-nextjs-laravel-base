@@ -58,33 +58,27 @@ const FormData = ({ data, setData, users, mutate, visible, setVisible }) => {
     }
   };
 
-  const uploadPhoto = (userId) => {
+  const uploadPhoto = async (userId) => {
     let photo = null;
 
-    if (!selectedFile) {
-      return photo;
+    try {
+      const response = await uploadAvatar(userId, selectedFile);
+      photo = response.data.photo;
+    } catch (e) {
+      handleErrors(e);
     }
-
-    uploadAvatar(userId, selectedFile)
-      .then(function (response) {
-        photo = response.data.photo;
-
-        if (userId === authUser.id) {
-          updateAuthUser({ photo });
-        }
-      })
-      .catch(function (e) {
-        handleErrors(e);
-      });
 
     return photo;
   };
 
   const updateUser = (user) => {
     update(user)
-      .then(function (response) {
+      .then(async function (response) {
         let userData = response.data;
-        userData.photo = uploadPhoto(userData.id);
+        if (selectedFile) {
+          userData.photo = await uploadPhoto(userData.id);
+        }
+
         if (userData.id === authUser.id) {
           updateAuthUser(user);
         }
@@ -113,12 +107,13 @@ const FormData = ({ data, setData, users, mutate, visible, setVisible }) => {
 
   const createUser = (user) => {
     create(user)
-      .then(function (response) {
+      .then(async function (response) {
         let userData = response.data;
-        userData.photo = uploadPhoto(userData.id);
+        if (selectedFile) {
+          userData.photo = await uploadPhoto(userData.id);
+        }
 
         mutate(users.concat(userData), false);
-        console.log(users, userData);
 
         successMessage('Registered user successful!');
         closeDrower();

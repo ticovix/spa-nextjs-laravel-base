@@ -13,7 +13,7 @@ const Navigation = () => {
       href: '/',
     },
     {
-      description: 'Usuários',
+      description: 'Users',
       icon: <UserOutlined />,
       href: '/users',
     },

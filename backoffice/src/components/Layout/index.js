@@ -65,7 +65,7 @@ const Layout = ({ children }) => {
       <Sider trigger={null} collapsible collapsed={collapsed}>
         <div className="logo">
           <Link href="/">
-            <img src={logo} alt="Logotipo" />
+            <img src={logo} alt="Logo" />
           </Link>
         </div>
         <Navigation></Navigation>
