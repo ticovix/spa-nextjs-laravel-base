@@ -73,9 +73,7 @@ trait AuthTrait
         $status = Password::broker($this->broker)->reset(
             $request->only('email', 'password', 'password_confirmation', 'token'),
             function ($user, $password) use ($request) {
-                $user->forceFill([
-                    'password' => Hash::make($password)
-                ])->save();
+                $user->fill(['password' => $password])->save();
 
                 $user->setRememberToken(Str::random(60));
 
