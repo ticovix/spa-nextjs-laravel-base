@@ -15,6 +15,22 @@ JWT user authentication.
 ## Hosts
 127.0.0.1 project.local
 
+## Server Requirements
+- PHP >= 7.3
+- BCMath PHP Extension
+- Ctype PHP Extension
+- Fileinfo PHP Extension
+- JSON PHP Extension
+- Mbstring PHP Extension
+- OpenSSL PHP Extension
+- PDO PHP Extension
+- Tokenizer PHP Extension
+- XML PHP Extension
+- GD PHP Extension
+
+## Front Requirements
+- Node (yarn or npm)
+
 ## Commands to execute back-end with Docker
 Obs: Execute only in backend folder
 ```
@@ -30,5 +46,6 @@ Obs: Execute only in backend folder
 Obs: Execute only in backoffice folder
 ```
     cp .env.example .env.local && \
+    yarn && \
     yarn dev
 ```
