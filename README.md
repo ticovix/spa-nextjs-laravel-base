@@ -27,8 +27,6 @@ JWT user authentication.
 - Tokenizer PHP Extension
 - XML PHP Extension
 - GD PHP Extension
-
-## Front Requirements
 - Node (yarn or npm)
 
 ## Commands to execute back-end with Docker
