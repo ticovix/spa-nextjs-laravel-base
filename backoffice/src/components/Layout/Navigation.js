@@ -11,23 +11,23 @@ const Navigation = () => {
       description: 'Dashboard',
       icon: <DashboardOutlined />,
       href: '/',
+      key: uuidv4(),
     },
     {
       description: 'Users',
       icon: <UserOutlined />,
       href: '/users',
+      key: uuidv4(),
     },
   ];
 
-  const indexMenu = menus.findIndex(
-    (menu) => menu.href === useRouter().pathname
-  );
-  const activeMenu = indexMenu >= 0 ? [indexMenu.toString()] : null;
+  const currentMenu = menus.find((menu) => menu.href === useRouter().pathname);
+  const activeMenu = currentMenu ? [currentMenu.key] : null;
 
   return (
     <Menu theme="dark" mode="inline" selectedKeys={activeMenu}>
       {menus.map((menu) => (
-        <Menu.Item icon={menu.icon} key={uuidv4()}>
+        <Menu.Item icon={menu.icon} key={menu.key}>
           <Link href={menu.href}>{menu.description}</Link>
         </Menu.Item>
       ))}
